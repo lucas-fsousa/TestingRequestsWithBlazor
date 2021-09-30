@@ -12,6 +12,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Server.Infrastructure.Configuration;
+using App.WebApi.Business.CarDefinition;
+using App.Entities;
 
 namespace HttpRequestApplication {
   public class Startup {
@@ -29,6 +31,9 @@ namespace HttpRequestApplication {
       services.AddSwaggerGen(c => {
         c.SwaggerDoc("v1", new OpenApiInfo { Title = "HttpRequestApplication", Version = "v1" });
       });
+
+
+      services.AddScoped(typeof(ICarService<Car>), typeof(CarService<Car>));
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

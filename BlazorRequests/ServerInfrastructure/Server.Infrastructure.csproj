@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Data\Mapping\" />
+    <ProjectReference Include="..\..\App.Entities\App.Entities.csproj" />
   </ItemGroup>
 
 </Project>

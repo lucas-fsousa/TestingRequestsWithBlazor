@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using App.Entities;
 using Server.Infrastructure.Contract;
 
-namespace HttpRequestApplication.Business.CarDefinition {
+namespace App.WebApi.Business.CarDefinition {
   public class CarService<TEntity>: ICarService<Car> {
     private readonly IGenericRepository<Car> _generic;
     public CarService(IGenericRepository<Car> car) {
@@ -14,13 +14,13 @@ namespace HttpRequestApplication.Business.CarDefinition {
     }
 
     public async ValueTask<Car> AddAsync(Car entity) {
-      var item = await _generic.GetByKeysAsync(keys: entity.Model);
-
-      if(item != null) {
-        return null;
-      }
-
-      return await _generic.AddAsync(entity);
+      entity.Manufacturer = entity.Manufacturer.ToUpper();
+      entity.Color = entity.Color.ToUpper();
+      entity.Model = entity.Model.ToUpper();
+      entity.Name = entity.Name.ToUpper();
+      var requestResult = await _generic.AddAsync(entity);
+      await _generic.CommitAsync();
+      return requestResult;
     }
 
     public void Delete(int? key = 0, string? unique = null) {
@@ -45,10 +45,15 @@ namespace HttpRequestApplication.Business.CarDefinition {
 
     public async Task<IEnumerable<Car>> GetAllAsync(int currentPage) {
       int MaxPerPage = 10;
+      if(currentPage < 1) {
+        currentPage = 1;
+      }
+
+      var skipCurrent = (currentPage - 1) * MaxPerPage;
       var list = await _generic.GetAllAsync(
         noTracking: false,
-        take: currentPage,
-        skip: MaxPerPage
+        take: MaxPerPage,
+        skip: skipCurrent
         ).ConfigureAwait(false);
       return list;
     }
@@ -56,9 +61,8 @@ namespace HttpRequestApplication.Business.CarDefinition {
     public async ValueTask<Car> GetAsyncByKey(int? key = 0, string? unique = "") {
       if(key > 0) {
         return await _generic.GetByKeysAsync(keys: key);
-      }else {
-        return await _generic.GetByKeysAsync(keys: unique);
       }
+      return null;
     }
 
     public async Task Update(Car entity) {

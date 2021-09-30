@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Server.Infrastructure.Data.Mapping;
 
 namespace Server.Infrastructure.Data {
   /* The context class is the bridge between the application and the database.
@@ -8,13 +9,8 @@ namespace Server.Infrastructure.Data {
   public class Context: DbContext {
     public Context(DbContextOptions<Context> options): base(options) { }
 
-    //
     protected override void OnModelCreating(ModelBuilder builder) {
-
-      //
-      // Code here
-      // type builder.ApplyConfiguration(new ClassMapping());
-      //
+      builder.ApplyConfiguration(new CarMapping());
 
       base.OnModelCreating(builder);
     }
