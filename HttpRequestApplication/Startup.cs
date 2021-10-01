@@ -1,18 +1,13 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Server.Infrastructure.Configuration;
 using App.WebApi.Business.CarDefinition;
+using App.WebApi.Business.UserDefinition;
 using App.Entities;
 using System.Reflection;
 using System.IO;
@@ -43,6 +38,7 @@ namespace HttpRequestApplication {
 
 
       services.AddScoped(typeof(ICarService<Car>), typeof(CarService<Car>));
+      services.AddScoped(typeof(IUserService<User>), typeof(UserService<User>));
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

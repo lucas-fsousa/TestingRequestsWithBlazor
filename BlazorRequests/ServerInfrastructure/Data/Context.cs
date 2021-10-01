@@ -11,6 +11,7 @@ namespace Server.Infrastructure.Data {
 
     protected override void OnModelCreating(ModelBuilder builder) {
       builder.ApplyConfiguration(new CarMapping());
+      builder.ApplyConfiguration(new UserMapping());
 
       base.OnModelCreating(builder);
     }
