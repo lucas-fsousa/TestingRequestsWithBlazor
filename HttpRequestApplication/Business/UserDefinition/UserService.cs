@@ -1,5 +1,6 @@
 ﻿using App.Entities;
 using App.WebApi.Business.Util;
+using App.WebApi.Models;
 using Server.Infrastructure.Contract;
 using System;
 using System.Collections.Generic;
@@ -12,28 +13,32 @@ namespace App.WebApi.Business.UserDefinition {
     public UserService(IGenericRepository<User> generic) {
       _repository = generic;
     }
-    public async ValueTask<User> Login(string user, string password) {
-      if(user.Equals("") || password.Equals("")) {
+    public async ValueTask<User> Login(UserLoginModel loginModel) {
+      if(loginModel.UserLogin == null || loginModel.Password == null) {
         return null;
       }
-      password = user + password.EncodePassword();
+      if(loginModel.UserLogin.Equals("") || loginModel.Password.Equals("")) {
+        return null;
+      }
+      loginModel.Password = loginModel.UserLogin + loginModel.Password.EncodePassword();
 
       var userAuthenticated = await _repository.GetAllAsync(
-        filter: x=> x.Login == user && x.Password == password,
+        filter: x => x.Login == loginModel.UserLogin && x.Password == loginModel.Password,
         noTracking: false
         );
       return userAuthenticated.FirstOrDefault();
     }
 
-    public async Task Register(User entity) {
+    public async ValueTask<User> Register(User entity) {
       if(entity == null) {
-        return;
+        return null;
       }
       var password = entity.Login + entity.Password.EncodePassword();
       entity.Password = password;
 
       await _repository.AddAsync(entity);
       await _repository.CommitAsync();
+      return entity;
     }
   }
 }

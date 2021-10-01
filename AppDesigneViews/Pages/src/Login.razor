@@ -1,21 +1,32 @@
-﻿<div id="layout">
+﻿@inject HttpClient _http
+@inject IRequestService _request
+<div id="layout">
   <form>
     <div class="form-group">
       <label>Login</label>
-      <input type="text" />
+      <input type="text" @bind="login.UserLogin"/>
     </div>
     <div class="form-group">
       <label>Password</label>
-      <input type="password" />
+      <input type="password" @bind="login.Password"/>
     </div>
+    <button class="btn btn-info" @onclick="Authentication">Acess now</button>
   </form>
 </div>
 
-<style scoped>
+@if(User != null) {
+  <p>DEU BOM ></p>
+} else {
+  <span>MIAU!</span>
+}
 
-
-</style>
 
 @code {
+  private User User { get; set; }
+  private UserLoginModel login = new UserLoginModel();
+
+  private async Task Authentication() {
+    User = await _request.LogOn(login);
+  }
 
 }

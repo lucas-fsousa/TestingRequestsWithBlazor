@@ -14,6 +14,7 @@ namespace App.WebApi.Business.CarDefinition {
     }
 
     public async ValueTask<Car> AddAsync(Car entity) {
+      entity.Id = 0;
       entity.Manufacturer = entity.Manufacturer.ToUpper();
       entity.Color = entity.Color.ToUpper();
       entity.Model = entity.Model.ToUpper();

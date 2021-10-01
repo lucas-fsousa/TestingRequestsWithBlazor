@@ -1,3 +1,4 @@
+using AppDesigneViews.ServicesController;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,7 +15,14 @@ namespace AppDesigneViews {
       var builder = WebAssemblyHostBuilder.CreateDefault(args);
       builder.RootComponents.Add<App>("#app");
 
-      builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+      //builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+
+
+      //base addres from App.WebApi
+      builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:44333/") });
+
+
+      builder.Services.AddScoped<IRequestService, RequestService>();
 
       await builder.Build().RunAsync();
     }
