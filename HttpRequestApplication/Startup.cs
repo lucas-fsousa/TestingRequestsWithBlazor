@@ -14,6 +14,8 @@ using System.Threading.Tasks;
 using Server.Infrastructure.Configuration;
 using App.WebApi.Business.CarDefinition;
 using App.Entities;
+using System.Reflection;
+using System.IO;
 
 namespace HttpRequestApplication {
   public class Startup {
@@ -29,6 +31,13 @@ namespace HttpRequestApplication {
 
       services.AddControllers();
       services.AddSwaggerGen(c => {
+        // definition of the name of the XML file that contains the detailed information
+        var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+        // Definition of the path where the file is located
+        var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+        c.IncludeXmlComments(xmlPath);
+
+
         c.SwaggerDoc("v1", new OpenApiInfo { Title = "HttpRequestApplication", Version = "v1" });
       });
 

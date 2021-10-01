@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Server.Infrastructure", "Bl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App.Entities", "App.Entities\App.Entities.csproj", "{AC8732EC-F893-41CD-9507-513C8ED1CCED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppDesigneViews", "AppDesigneViews\AppDesigneViews.csproj", "{F7B1807B-5F25-4248-A12C-1C26C7696BC9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppDesigneViews", "AppDesigneViews\AppDesigneViews.csproj", "{F7B1807B-5F25-4248-A12C-1C26C7696BC9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

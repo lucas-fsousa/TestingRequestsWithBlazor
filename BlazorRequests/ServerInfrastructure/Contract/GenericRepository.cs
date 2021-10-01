@@ -61,7 +61,7 @@ namespace Server.Infrastructure.Contract {
       }
         
       if(take != null) {
-        query.Take(take.Value);
+        query = query.Take(take.Value);
       }
 
       if(orderBy != null) {

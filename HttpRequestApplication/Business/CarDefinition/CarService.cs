@@ -31,25 +31,16 @@ namespace App.WebApi.Business.CarDefinition {
           _generic.Delete(entity.Result);
           _generic.CommitAsync();
         }
-
-      } else {
-
-        var entity = _generic.GetByKeysAsync(keys: unique);
-        if(entity.Result != null) {
-          _generic.Delete(entity.Result);
-          _generic.CommitAsync();
-        }
-
       }
     }
 
     public async Task<IEnumerable<Car>> GetAllAsync(int currentPage) {
-      int MaxPerPage = 10;
+      var MaxPerPage = 10;
+      var skipCurrent = (currentPage - 1) * MaxPerPage;
       if(currentPage < 1) {
         currentPage = 1;
       }
 
-      var skipCurrent = (currentPage - 1) * MaxPerPage;
       var list = await _generic.GetAllAsync(
         noTracking: false,
         take: MaxPerPage,

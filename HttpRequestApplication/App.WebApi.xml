@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>App.WebApi</name>
+    </assembly>
+    <members>
+        <member name="M:App.WebApi.Controllers.HomeController.GetById(System.Int32)">
+            <summary>
+            Search a user for the input key
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:App.WebApi.Controllers.HomeController.GetAll(System.Int32)">
+            <summary>
+            Search the server and return a users page corresponding to the input value.
+            </summary>
+            <param name="currentPage"></param>
+            <returns></returns>
+        </member>
+        <member name="M:App.WebApi.Controllers.HomeController.Insert(App.Entities.Car)">
+            <summary>
+            Add a new user
+            </summary>
+            <param name="car"></param>
+            <returns></returns>
+        </member>
+        <member name="M:App.WebApi.Controllers.HomeController.Update(App.Entities.Car)">
+            <summary>
+            Update an existing item
+            </summary>
+            <param name="car"></param>
+            <returns></returns>
+        </member>
+        <member name="M:App.WebApi.Controllers.HomeController.Delete(System.Int32)">
+            <summary>
+            Deletes an existing item linked to the given identifier.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
