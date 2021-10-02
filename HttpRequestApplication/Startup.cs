@@ -14,15 +14,23 @@ using System.IO;
 
 namespace HttpRequestApplication {
   public class Startup {
+
     public Startup(IConfiguration configuration) {
       Configuration = configuration;
     }
 
-    public IConfiguration Configuration { get; }
+     public IConfiguration Configuration { get; }
 
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services) {
       services.ExtensionConfigureServices(Configuration);
+
+
+      // ******** Insert here *********
+      services.AddCors(options => options.AddDefaultPolicy(
+        builder => { builder.WithOrigins("https://localhost:44376").AllowAnyHeader().AllowAnyMethod(); }
+        ));
+
 
       services.AddControllers();
       services.AddSwaggerGen(c => {
@@ -51,7 +59,12 @@ namespace HttpRequestApplication {
 
       app.UseHttpsRedirection();
 
+      app.UseCors(); // ******** Insert here *********
       app.UseRouting();
+
+
+      
+
 
       app.UseAuthorization();
 

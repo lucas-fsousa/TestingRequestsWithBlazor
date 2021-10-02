@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,10 +18,11 @@ namespace AppDesigneViews {
 
       //builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
-
       //base addres from App.WebApi
-      builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:44333/") });
-
+      builder.Services.AddScoped(sp => new HttpClient {
+        BaseAddress = new Uri("https://localhost:44333/")
+      });
+      
 
       builder.Services.AddScoped<IRequestService, RequestService>();
 

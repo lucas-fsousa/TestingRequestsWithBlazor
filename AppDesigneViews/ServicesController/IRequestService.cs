@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AppDesigneViews.ServicesController {
   public interface IRequestService {
-    public ValueTask<User> Create(User user);
+    public Task Create(User user);
     public ValueTask<User> LogOn(UserLoginModel loginModel);
   }
 }

@@ -19,6 +19,8 @@ namespace Server.Infrastructure.Configuration {
       // Definition of the generic repository for database manipulation
       services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
+
+
       return services;
     }
   }

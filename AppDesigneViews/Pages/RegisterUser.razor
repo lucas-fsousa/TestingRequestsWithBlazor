@@ -1,0 +1,42 @@
+﻿@page "/user/register"
+@inject NavigationManager _navigation
+@inject IRequestService _request
+
+<h2>Let's to register!</h2>
+
+<EditForm Model="NewUser" OnValidSubmit="@GoRegister">
+  <DataAnnotationsValidator />
+  <ValidationSummary />
+
+  <div class="form-group row">
+    <label>User Login </label>
+    <div class="col-sm-4">
+      <InputText @bind-Value="NewUser.Login" class="form-control" />
+      <ValidationMessage For="@(()=> NewUser.Login)" />
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label>User Password </label>
+    <div class="col-sm-4">
+      <InputText type="password" @bind-Value="NewUser.Password" class="form-control" />
+      <ValidationMessage For="@(()=> NewUser.Password)" />
+    </div>
+  </div>
+
+  <button class="btn btn-success" type="submit">Go Register</button>
+</EditForm>
+
+@code {
+
+  private User NewUser = new User();
+
+
+
+
+  public async Task GoRegister() {
+    await _request.Create(NewUser);
+    _navigation.NavigateTo("/");
+  }
+
+}

@@ -1,6 +1,7 @@
 ﻿using App.Entities;
 using App.WebApi.Business.UserDefinition;
 using App.WebApi.Models;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Server.Infrastructure.APIConfiguration;
@@ -18,8 +19,9 @@ namespace App.WebApi.Controllers {
       _user = user;
     }
 
-    [HttpGet, Route("login")]
-    public async Task<IActionResult> Login(UserLoginModel model) {
+    
+    [HttpPost, Route("login")]
+    public async Task<IActionResult> Login([FromBody]UserLoginModel model) {
       try {
         var authenticated = await _user.Login(model);
 
