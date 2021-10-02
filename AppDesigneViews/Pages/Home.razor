@@ -1,6 +1,12 @@
 ﻿@page "/home"
+@inject NavigationManager _navigation
 
-<DefaultRender />
+
+@if(Login.Authorized) {
+  <Cars />
+} else {
+  _navigation.NavigateTo("/");
+}
 
 @code {
 

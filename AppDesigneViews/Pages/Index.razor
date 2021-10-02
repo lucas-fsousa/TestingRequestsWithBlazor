@@ -1,11 +1,17 @@
 ﻿@page "/"
 
-<Login />
+@if(Authorized) {
+  <Home />
+} else {
+  <Login />
+}
+
 
 
 
 
 @code{
-
+  [Parameter]
+  public bool Authorized { get; set; }
 
 }

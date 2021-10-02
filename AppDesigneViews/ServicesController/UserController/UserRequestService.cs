@@ -1,17 +1,14 @@
-﻿using AppDesigneViews.Models;
+﻿using AppDesigneViews.Entities;
+using AppDesigneViews.Models;
 using System;
-using AppDesigneViews.Entities;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Net.Http;
 using System.Net.Http.Json;
-using System.Text.Json;
+using System.Threading.Tasks;
 
-namespace AppDesigneViews.ServicesController {
-  public class RequestService : IRequestService {
+namespace AppDesigneViews.ServicesController.UserController {
+  public class UserRequestService : IUserRequestService {
     private readonly HttpClient _http;
-    public RequestService(HttpClient http) {
+    public UserRequestService(HttpClient http) {
       _http = http;
     }
 
@@ -22,7 +19,7 @@ namespace AppDesigneViews.ServicesController {
         string x;
         Console.WriteLine(ex.Message);
       }
-      
+
     }
 
     public async ValueTask<User> LogOn(UserLoginModel loginModel) {

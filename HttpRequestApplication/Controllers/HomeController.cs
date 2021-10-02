@@ -29,7 +29,7 @@ namespace App.WebApi.Controllers {
     [SwaggerResponse(statusCode: 204, description: "Item not found. Possible reasons: Does not exist, is blocked or is in use.")]
 
     [HttpGet, Route("getById/{id}")]
-    public async Task<IActionResult> GetById(int id) {
+    public async Task<IActionResult> GetById([FromRoute]int id) {
       try {
         var result = await _definition.GetAsyncByKey(id);
         if(result == null) {

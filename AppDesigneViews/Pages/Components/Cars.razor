@@ -1,0 +1,34 @@
+﻿@inject ICarRequestService _request
+
+@if(Car == null) {
+  <p>Ainda não</p>
+} else {
+  <div>
+    <input type="text" value="@Car.Color" readonly />
+    <input type="text" value="@Car.Manufacturer" readonly />
+    <input type="text" value="@Car.MaxKm.ToString()" readonly />
+    <input type="text" value="@Car.Model" readonly />
+    <input type="text" value="@Car.ModelReleaseYear.ToString()" readonly />
+    <input type="text" value="@Car.Name" readonly />
+    <input type="text" value="@Car.Id.ToString()" readonly />
+  </div>
+}
+<input type="number" @bind="IdForSearch" />
+<button @onclick="GetById">Buscar</button>
+
+<br />
+<hr />
+<AllCars />
+<br />
+<hr />
+
+
+@code {
+
+  public Car Car { get; set; }
+  public int IdForSearch { get; set; }
+
+  public async Task GetById() {
+    Car = await _request.GetCarByIdAsync(IdForSearch);
+  }
+}

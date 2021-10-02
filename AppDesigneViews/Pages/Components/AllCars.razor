@@ -1,0 +1,61 @@
+﻿@inject ICarRequestService _request
+
+@if(ListCar == null) {
+  <p>loading...</p>
+} else if(ListCar.Count < 1) {
+  <p>Not fround.</p>
+} else {
+  <table class="table table-dark table-responsive-md">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>NAME</th>
+        <th>MODEL</th>
+        <th>COLOR</th>
+        <th>MANUFACTURER</th>
+        <th>MAXKM</th>
+        <th>MODEL RELEASE</th>
+      </tr>
+    </thead>
+    @foreach(var car in ListCar) {
+      <tbody>
+        <tr>
+          <td>@car.Id</td>
+          <td>@car.Name</td>
+          <td>@car.Model</td>
+          <td>@car.Color</td>
+          <td>@car.Manufacturer</td>
+          <td>@car.MaxKm</td>
+          <td>@car.ModelReleaseYear</td>
+        </tr>
+      </tbody>
+    }
+  </table>
+}
+<span> Current &lt;&lt; @CurrentPage &gt;&gt;&nbsp;</span>
+<button @onclick="GetCarsForPreviousPage" class="btn btn-secondary">Previous</button>
+<button @onclick="GetCarsForNextPage" class="btn btn-info">Next</button>
+
+@code {
+
+  public List<Car> ListCar { get; set; }
+  public int CurrentPage { get; set; } = 1;
+
+  protected override async Task OnInitializedAsync() {
+    ListCar = await _request.GetAllForCurrentPage(CurrentPage);
+  }
+
+  public async Task GetCarsForNextPage() {
+    CurrentPage++;
+    ListCar = await _request.GetAllForCurrentPage(CurrentPage);
+  }
+
+  public async Task GetCarsForPreviousPage() {
+    if(CurrentPage > 1) {
+      CurrentPage--;
+    }
+
+    ListCar = await _request.GetAllForCurrentPage(CurrentPage);
+    Console.WriteLine(ListCar.Count);
+  }
+}

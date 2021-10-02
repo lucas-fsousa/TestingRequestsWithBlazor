@@ -14,4 +14,8 @@
     <Folder Include="wwwroot\sample-data\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\App.Entities\App.Entities.csproj" />
+  </ItemGroup>
+
 </Project>
