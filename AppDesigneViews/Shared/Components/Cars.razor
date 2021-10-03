@@ -3,33 +3,12 @@
 @if(Car == null) {
   <p>not found</p>
 } else {
-  <table class="table table-dark table-responsive-md">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>NAME</th>
-        <th>MODEL</th>
-        <th>COLOR</th>
-        <th>MANUFACTURER</th>
-        <th>MAXKM</th>
-        <th>MODEL RELEASE</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>@Car.Id</td>
-        <td>@Car.Name</td>
-        <td>@Car.Model</td>
-        <td>@Car.Color</td>
-        <td>@Car.Manufacturer</td>
-        <td>@Car.MaxKm</td>
-        <td>@Car.ModelReleaseYear</td>
-      </tr>
-    </tbody>
-  </table>
+  <GenericCarRender Car="Car" Delete="Delete" Update="Update" />
 }
 <input type="number" @bind="IdForSearch" />
 <button @onclick="GetById" class="btn btn-info">Buscar</button>
+
+
 
 @code {
 
@@ -39,4 +18,13 @@
   public async Task GetById() {
     Car = await _request.GetCarByIdAsync(IdForSearch);
   }
+
+  public async Task Delete(Car car) {
+
+  }
+
+  public async Task Update(Car car) {
+
+  }
+
 }

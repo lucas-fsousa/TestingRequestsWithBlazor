@@ -1,34 +1,33 @@
-﻿
+﻿@inject ICarRequestService _request
 
 <div class="card-group row">
   <div class="card-deck col-md-5 cards" style="width: 11rem;">
     @foreach(var photo in Car.Photos) {
       <img class="card-img-top" src="@photo.Url" alt="Card image cap">
     }
-    <div class="card-body">
-      <h5 class="card-title">@Car.Name - @Car.Model release date @Car.ModelReleaseYear</h5>
-      <p class="card-text">@Car.MaxKm</p>
-      <p class="card-text">@Car.Manufacturer</p>
-      <span><a @onclick="(()=> )" class="link">Delete</a> | <a>Edit</a></span>
-    </div>
+  <div class="card-body">
+    <h5 class="card-title">@Car.Name - @Car.Model release date @Car.ModelReleaseYear</h5>
+    <p class="card-text">@Car.MaxKm</p>
+    <p class="card-text">@Car.Manufacturer</p>
+    <span><a @onclick="(()=> Delete.InvokeAsync(Car))" class="link">Delete</a> | <a @onclick="(()=> Update.InvokeAsync(Car))" class="link">Edit</a></span>
+  </div>
   </div>
 </div>
-}
-
-
-
 
 @code {
-
-  public EventCallback Delete { get; set; }
-
-  [Parameter]
-  public RenderFragment PropRender { get; set; }
-
-  [Parameter]
-  public int Identifier { get; set; }
 
   [Parameter]
   public Car Car { get; set; }
 
+  [Parameter]
+  public EventCallback<Car> Delete { get; set; }
+
+  [Parameter]
+  public EventCallback<Car> Update { get; set; }
+
+
 }
+
+
+
+

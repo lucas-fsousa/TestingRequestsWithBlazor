@@ -3,27 +3,25 @@
 
 @if(ListCar != null) {
   @foreach(var car in ListCar) {
-    <GenericCarRender Car="car" />
+    <GenericCarRender Car="car" Delete="Delete"/>
   }
 
 }
-
 
 <span> Current &lt;&lt; @CurrentPage &gt;&gt;&nbsp;</span>
 <button @onclick="GetCarsForPreviousPage" class="btn btn-secondary">Previous</button>
 <button @onclick="GetCarsForNextPage" class="btn btn-info">Next</button>
 
-<style>
-  .cards {
-    margin-left: 1%;
-    margin-right: 1%;
-  }
-</style>
 
 @code {
 
+  // ----------------- Props -------------------------
+
   public List<Car> ListCar { get; set; }
   public int CurrentPage { get; set; } = 1;
+
+
+  // ------------------- METHODS ---------------------
 
   protected override async Task OnInitializedAsync() {
     ListCar = await _request.GetAllForCurrentPage(CurrentPage);
@@ -40,9 +38,8 @@
     }
   }
 
-  private async Task Delete(int id) {
-    Console.WriteLine("invocou o delete");
-    //await _request.DeleteByIdAsync(id);
+  private async Task Delete(Car car) {
+    await _request.DeleteByIdAsync(car.Id);
     //_navigation.NavigateTo("");
   }
 

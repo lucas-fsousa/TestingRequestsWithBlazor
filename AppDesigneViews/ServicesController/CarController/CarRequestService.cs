@@ -37,5 +37,13 @@ namespace AppDesigneViews.ServicesController.CarController {
         return null;
       }
     }
+
+    public async Task UpdateAsync(Car car) {
+      try {
+        await _http.PutAsJsonAsync($"api/v1/car/update", car);
+      } catch(Exception ex) {
+        Console.WriteLine(ex.Message);
+      }
+    }
   }
 }

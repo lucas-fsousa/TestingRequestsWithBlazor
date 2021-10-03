@@ -1,0 +1,40 @@
+﻿
+@if(!Closed) {
+<div>
+  <div class="alert alert-@TypeAlert alert-dismissible fade show" role="alert">
+    <p>@Message</p>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close" @onclick="Change">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <br />
+  <div>
+    <button class="btn btn-danger" @onclick="(() => AfterResponse(false))">Cancel</button>
+    <button class="btn btn-success" @onclick="(()=> AfterResponse(true))">Confirm</button>
+  </div>
+</div>
+}
+
+
+@code {
+  private void AfterResponse(bool param) {
+    Change();
+    Response.InvokeAsync(param);
+  }
+
+  private bool Closed { get; set; } = false;
+
+  private void Change() {
+    Closed = !Closed;
+  }
+
+  [Parameter]
+  public EventCallback<bool> Response { get; set; }
+
+  [Parameter]
+  public string TypeAlert { get; set; } = "info";
+
+  [Parameter]
+  public string Message { get; set; } = "Hello";
+
+}

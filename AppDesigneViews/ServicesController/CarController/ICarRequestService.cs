@@ -9,5 +9,6 @@ namespace AppDesigneViews.ServicesController.CarController {
     public ValueTask<Car> GetCarByIdAsync(int id);
     public Task<List<Car>> GetAllForCurrentPage(int currentPage);
     public Task DeleteByIdAsync(int id);
+    public Task UpdateAsync(Car car);
   }
 }
