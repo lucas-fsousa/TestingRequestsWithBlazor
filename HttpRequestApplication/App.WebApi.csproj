@@ -26,4 +26,8 @@
     <ProjectReference Include="..\BlazorRequests\ServerInfrastructure\Server.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\CarImages\" />
+  </ItemGroup>
+
 </Project>

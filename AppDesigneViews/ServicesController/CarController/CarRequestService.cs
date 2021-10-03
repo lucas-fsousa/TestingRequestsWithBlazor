@@ -14,7 +14,7 @@ namespace AppDesigneViews.ServicesController.CarController {
 
     public async Task DeleteByIdAsync(int id) {
       try {
-        await _http.DeleteAsync($"api/v1/home/delete/{id}");
+        await _http.DeleteAsync($"api/v1/car/delete/{id}");
       } catch(Exception ex) {
         Console.WriteLine(ex.Message);
       }
@@ -22,7 +22,7 @@ namespace AppDesigneViews.ServicesController.CarController {
 
     public async Task<List<Car>> GetAllForCurrentPage(int currentPage) {
       try {
-        return await _http.GetFromJsonAsync<List<Car>>($"api/v1/home/getAll/{currentPage}");
+        return await _http.GetFromJsonAsync<List<Car>>($"api/v1/car/getAll/{currentPage}");
       } catch(Exception ex) {
         Console.WriteLine(ex.Message);
         return null;
@@ -31,7 +31,7 @@ namespace AppDesigneViews.ServicesController.CarController {
 
     public async ValueTask<Car> GetCarByIdAsync(int id) {
       try {
-        return await _http.GetFromJsonAsync<Car>($"api/v1/home/getbyid/{id}");
+        return await _http.GetFromJsonAsync<Car>($"api/v1/car/getbyid/{id}");
       } catch(Exception ex) {
         Console.WriteLine(ex.Message);
         return null;

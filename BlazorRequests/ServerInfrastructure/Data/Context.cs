@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using App.Entities;
+using Microsoft.EntityFrameworkCore;
 using Server.Infrastructure.Data.Mapping;
 
 namespace Server.Infrastructure.Data {
@@ -10,8 +11,10 @@ namespace Server.Infrastructure.Data {
     public Context(DbContextOptions<Context> options): base(options) { }
 
     protected override void OnModelCreating(ModelBuilder builder) {
+
       builder.ApplyConfiguration(new CarMapping());
       builder.ApplyConfiguration(new UserMapping());
+      builder.ApplyConfiguration(new PhotoMapping());
 
       base.OnModelCreating(builder);
     }

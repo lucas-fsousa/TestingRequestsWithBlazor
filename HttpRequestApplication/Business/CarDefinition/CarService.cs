@@ -1,14 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using App.Entities;
+using App.WebApi.Models;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Server.Infrastructure.Contract;
 
 namespace App.WebApi.Business.CarDefinition {
   public class CarService<TEntity>: ICarService<Car> {
     private readonly IGenericRepository<Car> _generic;
+    private string Host { get; } = "localhost:44333";
     public CarService(IGenericRepository<Car> car) {
       _generic = car;
     }
@@ -45,8 +50,14 @@ namespace App.WebApi.Business.CarDefinition {
       var list = await _generic.GetAllAsync(
         noTracking: false,
         take: MaxPerPage,
-        skip: skipCurrent
+        skip: skipCurrent,
+        includeProperties: "Photos"
         ).ConfigureAwait(false);
+      foreach(var item in list) {
+        foreach(var photo in item.Photos) {
+          photo.Url = $"https://{Host}/carimages/{photo.Url}";
+        }
+      }
       return list;
     }
 

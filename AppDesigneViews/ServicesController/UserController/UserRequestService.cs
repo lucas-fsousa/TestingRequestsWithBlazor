@@ -14,7 +14,7 @@ namespace AppDesigneViews.ServicesController.UserController {
 
     public async Task Create(User user) {
       try {
-        await _http.PostAsJsonAsync("api/user/register", user);
+        await _http.PostAsJsonAsync("api/v1/user/register", user);
       } catch(Exception ex) {
         string x;
         Console.WriteLine(ex.Message);
@@ -25,7 +25,7 @@ namespace AppDesigneViews.ServicesController.UserController {
     public async ValueTask<User> LogOn(UserLoginModel loginModel) {
       try {
         //return await _http.GetFromJsonAsync<User>($"api/user/login");
-        var result = await _http.PostAsJsonAsync<UserLoginModel>("api/user/login", loginModel);
+        var result = await _http.PostAsJsonAsync<UserLoginModel>("api/v1/user/login", loginModel);
         return result.Content.ReadFromJsonAsync<User>().Result;
 
       } catch(Exception ex) {

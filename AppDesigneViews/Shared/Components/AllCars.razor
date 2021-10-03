@@ -2,19 +2,10 @@
 @inject NavigationManager _navigation
 
 @if(ListCar != null) {
-  <div class="card-group row">
-    @foreach(var car in ListCar) {
-      <div class="card-deck col-md-5 cards" style="width: 11rem;">
-        <img class="card-img-top" src="https://blog.catarinacarros.com.br/wp-content/uploads/2019/04/quiz.jpg" alt="Card image cap">
-        <div class="card-body">
-          <h5 class="card-title">@car.Name - @car.Model release date @car.ModelReleaseYear</h5>
-          <p class="card-text">@car.MaxKm</p>
-          <p class="card-text">@car.Manufacturer</p>
-          <span><a @onclick="(()=> Delete(car.Id))" class="link">Delete</a> | <a>Edit</a></span>
-        </div>
-      </div>
-    }
-  </div>
+  @foreach(var car in ListCar) {
+    <GenericCarRender Car="car" />
+  }
+
 }
 
 
@@ -50,8 +41,9 @@
   }
 
   private async Task Delete(int id) {
-    await _request.DeleteByIdAsync(id);
-    _navigation.NavigateTo("");
+    Console.WriteLine("invocou o delete");
+    //await _request.DeleteByIdAsync(id);
+    //_navigation.NavigateTo("");
   }
 
   private async Task GetCarsForPreviousPage() {

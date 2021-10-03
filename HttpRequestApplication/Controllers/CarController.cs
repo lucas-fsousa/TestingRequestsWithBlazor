@@ -8,14 +8,15 @@ using System.Threading.Tasks;
 using App.WebApi.Business.CarDefinition;
 using Server.Infrastructure.APIConfiguration;
 using Swashbuckle.AspNetCore.Annotations;
+using App.WebApi.Models;
 
 namespace App.WebApi.Controllers {
   [Route("api/v1/[controller]")]
   [ApiController]
-  public class HomeController : ControllerBase {
+  public class CarController : ControllerBase {
     private readonly ICarService<Car> _definition;
 
-    public HomeController(ICarService<Car> carService) {
+    public CarController(ICarService<Car> carService) {
       _definition = carService;
     }
 

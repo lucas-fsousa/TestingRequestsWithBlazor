@@ -9,8 +9,10 @@ using Server.Infrastructure.Configuration;
 using App.WebApi.Business.CarDefinition;
 using App.WebApi.Business.UserDefinition;
 using App.Entities;
+using App.WebApi.Business.CarImagesDefinition;
 using System.Reflection;
 using System.IO;
+using Microsoft.AspNetCore.Http;
 
 namespace HttpRequestApplication {
   public class Startup {
@@ -47,6 +49,7 @@ namespace HttpRequestApplication {
 
       services.AddScoped(typeof(ICarService<Car>), typeof(CarService<Car>));
       services.AddScoped(typeof(IUserService<User>), typeof(UserService<User>));
+      services.AddScoped(typeof(ICarImageService<Photo>), typeof(CarImageService<Photo>));
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,14 +59,12 @@ namespace HttpRequestApplication {
         app.UseSwagger();
         app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "HttpRequestApplication v1"));
       }
+      app.UseStaticFiles();
 
       app.UseHttpsRedirection();
 
       app.UseCors(); // ******** Insert here *********
       app.UseRouting();
-
-
-      
 
 
       app.UseAuthorization();

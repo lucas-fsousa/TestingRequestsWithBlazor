@@ -11,7 +11,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace App.WebApi.Controllers {
-  [Route("api/[controller]")]
+  [Route("api/v1/[controller]")]
   [ApiController]
   public class UserController : ControllerBase {
     private readonly IUserService<User> _user;

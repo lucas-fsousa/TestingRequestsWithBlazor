@@ -13,5 +13,8 @@ namespace App.Entities {
     public int MaxKm { get; set; }
     public int ModelReleaseYear { get; set; }
     public string Manufacturer { get; set; }
+
+    public int PhotoId { get; set; }
+    public List<Photo> Photos { get; set; }
   }
 }
