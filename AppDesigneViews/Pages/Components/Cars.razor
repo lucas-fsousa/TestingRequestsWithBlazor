@@ -1,27 +1,35 @@
 ﻿@inject ICarRequestService _request
 
 @if(Car == null) {
-  <p>Ainda não</p>
+  <p>not found</p>
 } else {
-  <div>
-    <input type="text" value="@Car.Color" readonly />
-    <input type="text" value="@Car.Manufacturer" readonly />
-    <input type="text" value="@Car.MaxKm.ToString()" readonly />
-    <input type="text" value="@Car.Model" readonly />
-    <input type="text" value="@Car.ModelReleaseYear.ToString()" readonly />
-    <input type="text" value="@Car.Name" readonly />
-    <input type="text" value="@Car.Id.ToString()" readonly />
-  </div>
+  <table class="table table-dark table-responsive-md">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>NAME</th>
+        <th>MODEL</th>
+        <th>COLOR</th>
+        <th>MANUFACTURER</th>
+        <th>MAXKM</th>
+        <th>MODEL RELEASE</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>@Car.Id</td>
+        <td>@Car.Name</td>
+        <td>@Car.Model</td>
+        <td>@Car.Color</td>
+        <td>@Car.Manufacturer</td>
+        <td>@Car.MaxKm</td>
+        <td>@Car.ModelReleaseYear</td>
+      </tr>
+    </tbody>
+  </table>
 }
 <input type="number" @bind="IdForSearch" />
-<button @onclick="GetById">Buscar</button>
-
-<br />
-<hr />
-<AllCars />
-<br />
-<hr />
-
+<button @onclick="GetById" class="btn btn-info">Buscar</button>
 
 @code {
 

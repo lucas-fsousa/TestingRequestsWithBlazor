@@ -4,6 +4,16 @@
     flex-direction: column;
 }
 
+.link {
+    color: #052c8a;  
+}
+
+.link:hover {
+    color: #000e79;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
 .main {
     flex: 1;
 }

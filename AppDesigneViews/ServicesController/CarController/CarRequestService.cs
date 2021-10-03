@@ -1,4 +1,5 @@
 ﻿using AppDesigneViews.Entities;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
@@ -11,14 +12,30 @@ namespace AppDesigneViews.ServicesController.CarController {
       _http = httpClient;
     }
 
+    public async Task DeleteByIdAsync(int id) {
+      try {
+        await _http.DeleteAsync($"api/v1/home/delete/{id}");
+      } catch(Exception ex) {
+        Console.WriteLine(ex.Message);
+      }
+    }
+
     public async Task<List<Car>> GetAllForCurrentPage(int currentPage) {
-      var result = await _http.GetFromJsonAsync<List<Car>>($"api/v1/home/getAll/{currentPage}");
-      return result;
+      try {
+        return await _http.GetFromJsonAsync<List<Car>>($"api/v1/home/getAll/{currentPage}");
+      } catch(Exception ex) {
+        Console.WriteLine(ex.Message);
+        return null;
+      }
     }
 
     public async ValueTask<Car> GetCarByIdAsync(int id) {
-      var result = await _http.GetFromJsonAsync<Car>($"api/v1/home/getbyid/{id}");
-      return result;
+      try {
+        return await _http.GetFromJsonAsync<Car>($"api/v1/home/getbyid/{id}");
+      } catch(Exception ex) {
+        Console.WriteLine(ex.Message);
+        return null;
+      }
     }
   }
 }

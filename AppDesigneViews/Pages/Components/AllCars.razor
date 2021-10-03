@@ -1,40 +1,33 @@
 ﻿@inject ICarRequestService _request
+@inject NavigationManager _navigation
 
-@if(ListCar == null) {
-  <p>loading...</p>
-} else if(ListCar.Count < 1) {
-  <p>Not fround.</p>
-} else {
-  <table class="table table-dark table-responsive-md">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>NAME</th>
-        <th>MODEL</th>
-        <th>COLOR</th>
-        <th>MANUFACTURER</th>
-        <th>MAXKM</th>
-        <th>MODEL RELEASE</th>
-      </tr>
-    </thead>
+@if(ListCar != null) {
+  <div class="card-group row">
     @foreach(var car in ListCar) {
-      <tbody>
-        <tr>
-          <td>@car.Id</td>
-          <td>@car.Name</td>
-          <td>@car.Model</td>
-          <td>@car.Color</td>
-          <td>@car.Manufacturer</td>
-          <td>@car.MaxKm</td>
-          <td>@car.ModelReleaseYear</td>
-        </tr>
-      </tbody>
+      <div class="card-deck col-md-5 cards" style="width: 11rem;">
+        <img class="card-img-top" src="https://blog.catarinacarros.com.br/wp-content/uploads/2019/04/quiz.jpg" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title">@car.Name - @car.Model release date @car.ModelReleaseYear</h5>
+          <p class="card-text">@car.MaxKm</p>
+          <p class="card-text">@car.Manufacturer</p>
+          <span><a @onclick="(()=> Delete(car.Id))" class="link">Delete</a> | <a>Edit</a></span>
+        </div>
+      </div>
     }
-  </table>
+  </div>
 }
+
+
 <span> Current &lt;&lt; @CurrentPage &gt;&gt;&nbsp;</span>
 <button @onclick="GetCarsForPreviousPage" class="btn btn-secondary">Previous</button>
 <button @onclick="GetCarsForNextPage" class="btn btn-info">Next</button>
+
+<style>
+  .cards {
+    margin-left: 1%;
+    margin-right: 1%;
+  }
+</style>
 
 @code {
 
@@ -45,17 +38,26 @@
     ListCar = await _request.GetAllForCurrentPage(CurrentPage);
   }
 
-  public async Task GetCarsForNextPage() {
+  private async Task GetCarsForNextPage() {
     CurrentPage++;
-    ListCar = await _request.GetAllForCurrentPage(CurrentPage);
+    var result = await _request.GetAllForCurrentPage(CurrentPage);
+    if(result != null) {
+      ListCar = result;
+    } else {
+      CurrentPage--;
+      ListCar = await _request.GetAllForCurrentPage(CurrentPage);
+    }
   }
 
-  public async Task GetCarsForPreviousPage() {
+  private async Task Delete(int id) {
+    await _request.DeleteByIdAsync(id);
+    _navigation.NavigateTo("");
+  }
+
+  private async Task GetCarsForPreviousPage() {
     if(CurrentPage > 1) {
       CurrentPage--;
     }
-
     ListCar = await _request.GetAllForCurrentPage(CurrentPage);
-    Console.WriteLine(ListCar.Count);
   }
 }
