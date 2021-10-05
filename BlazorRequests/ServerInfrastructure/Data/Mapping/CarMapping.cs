@@ -18,6 +18,8 @@ namespace Server.Infrastructure.Data.Mapping {
       builder.Property(x => x.Color).HasMaxLength(60).IsRequired();
       builder.Property(x => x.Manufacturer).HasMaxLength(60).IsRequired();
       builder.HasMany(x => x.Photos).WithOne();
+
+      builder.Ignore(x => x.Images);
     }
   }
 }

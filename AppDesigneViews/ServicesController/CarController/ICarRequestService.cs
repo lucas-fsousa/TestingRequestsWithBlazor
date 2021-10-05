@@ -10,5 +10,6 @@ namespace AppDesigneViews.ServicesController.CarController {
     public Task<List<Car>> GetAllForCurrentPage(int currentPage);
     public Task DeleteByIdAsync(int id);
     public Task UpdateAsync(Car car);
+    public Task InsertAsync(Car car);
   }
 }

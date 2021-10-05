@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,7 @@ namespace App.Entities {
     public string Manufacturer { get; set; }
 
     public int PhotoId { get; set; }
+    public IFormFile Images { get; set; }
     public List<Photo> Photos { get; set; }
   }
 }

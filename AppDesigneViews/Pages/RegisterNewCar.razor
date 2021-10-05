@@ -1,9 +1,92 @@
 ﻿@page "/home/car/register"
+@inject ICarRequestService _service
+@using Microsoft.AspNetCore.Http
+
+<EditForm Model="NewCar" OnValidSubmit="@GoRegister">
+  <DataAnnotationsValidator />
+  <ValidationSummary />
+
+  <div class="form-group row">
+    <label>Name </label>
+    <div class="col-sm-4">
+      <InputText @bind-Value="NewCar.Name" class="form-control" />
+      <ValidationMessage For="@(()=> NewCar.Name)" />
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label>Color </label>
+    <div class="col-sm-4">
+      <InputSelect @bind-Value="NewCar.Color" class="form-control">
+        <option value="Black">Black</option>
+        <option value="White">White</option>
+        <option value="Red">Red</option>
+      </InputSelect>
+      <ValidationMessage For="@(()=> NewCar.Color)" />
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label>Model </label>
+    <div class="col-sm-4">
+      <InputText @bind-Value="NewCar.Model" class="form-control" />
+      <ValidationMessage For="@(()=> NewCar.Model)" />
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label>Manufacturer </label>
+    <div class="col-sm-4">
+      <InputText @bind-Value="NewCar.Manufacturer" class="form-control" />
+      <ValidationMessage For="@(()=> NewCar.Manufacturer)" />
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label>Model Release </label>
+    <div class="col-sm-4">
+      <InputSelect @bind-Value="NewCar.ModelReleaseYear" class="form-control">
+        <option value="@(DateTime.Now.Year-1)">@(DateTime.Now.Year-1)</option>
+        <option value="@(DateTime.Now.Year)">@(DateTime.Now.Year)</option>
+        <option value="@(DateTime.Now.Year+1)">@(DateTime.Now.Year+1)</option>
+        <option value="@(DateTime.Now.Year+2)">@(DateTime.Now.Year+2)</option>
+      </InputSelect>
+      <ValidationMessage For="@(()=> NewCar.ModelReleaseYear)" />
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label>Max Km/h </label>
+    <div class="col-sm-4">
+      <InputNumber @bind-Value="NewCar.MaxKm" class="form-control" />
+      <ValidationMessage For="@(()=> NewCar.MaxKm)" />
+    </div>
+  </div>
 
 
+  <div class="form-group row">
+    <label>Images </label>
+    <div class="col-sm-4">
+      <InputFile type="file" @bind-Value="NewCar.Images" class="form-control"/>
+      <ValidationMessage For="@(()=> FormFile)" />
+    </div>
+  </div>
+
+
+  <button class="btn btn-success" type="submit">Go Register</button>
+</EditForm>
 
 <h3>aleatorio</h3>
 
 @code {
 
+  private Car NewCar = new Car();
+
+  private IFormFile FormFile { get; set; }
+
+
+
+  private async Task GoRegister() {
+    await _service.InsertAsync(NewCar);
+  }
 }

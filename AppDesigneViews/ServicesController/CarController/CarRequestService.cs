@@ -38,6 +38,14 @@ namespace AppDesigneViews.ServicesController.CarController {
       }
     }
 
+    public async Task InsertAsync(Car car) {
+      try {
+        await _http.PostAsJsonAsync("api/v1/car/insert", car);
+      } catch(Exception ex) {
+        Console.WriteLine(ex.Message);
+      }
+    }
+
     public async Task UpdateAsync(Car car) {
       try {
         await _http.PutAsJsonAsync($"api/v1/car/update", car);

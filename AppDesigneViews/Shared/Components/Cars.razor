@@ -1,30 +1,53 @@
 ﻿@inject ICarRequestService _request
+@inject NavigationManager _navigation
 
-@if(Car == null) {
-  <p>not found</p>
-} else {
-  <GenericCarRender Car="Car" Delete="Delete" Update="Update" />
+@if(ListCar != null) {
+  @foreach(var car in ListCar) {
+    <GenericCarRender Delete="Delete" Car="car"/>
+  }
+
 }
-<input type="number" @bind="IdForSearch" />
-<button @onclick="GetById" class="btn btn-info">Buscar</button>
 
+
+<span> Current &lt;&lt; @CurrentPage &gt;&gt;&nbsp;</span>
+<button @onclick="GetCarsForPreviousPage" class="btn btn-secondary">Previous</button>
+<button @onclick="GetCarsForNextPage" class="btn btn-info">Next</button>
 
 
 @code {
 
-  public Car Car { get; set; }
-  public int IdForSearch { get; set; }
+  // ----------------- Props -------------------------
 
-  public async Task GetById() {
-    Car = await _request.GetCarByIdAsync(IdForSearch);
+  public List<Car> ListCar { get; set; }
+  public int CurrentPage { get; set; } = 1;
+
+
+  // ------------------- METHODS ---------------------
+
+  protected override async Task OnInitializedAsync() {
+    ListCar = await _request.GetAllForCurrentPage(CurrentPage);
   }
 
-  public async Task Delete(Car car) {
-
+  private async Task GetCarsForNextPage() {
+    CurrentPage++;
+    var result = await _request.GetAllForCurrentPage(CurrentPage);
+    if(result != null) {
+      ListCar = result;
+    } else {
+      CurrentPage--;
+      ListCar = await _request.GetAllForCurrentPage(CurrentPage);
+    }
   }
 
-  public async Task Update(Car car) {
-
+  private async Task Delete(Car car) {
+    await _request.DeleteByIdAsync(car.Id);
+    //_navigation.NavigateTo("");
   }
 
+  private async Task GetCarsForPreviousPage() {
+    if(CurrentPage > 1) {
+      CurrentPage--;
+    }
+    ListCar = await _request.GetAllForCurrentPage(CurrentPage);
+  }
 }
