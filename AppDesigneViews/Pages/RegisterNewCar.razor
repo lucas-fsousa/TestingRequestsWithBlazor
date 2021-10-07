@@ -1,5 +1,4 @@
 ﻿@page "/home/car/register"
-@inject ICarRequestService _service
 
 <EditForm Model="NewCar" OnValidSubmit="@GoRegister">
   <DataAnnotationsValidator />
@@ -46,10 +45,13 @@
     <label>Model Release </label>
     <div class="col-sm-4">
       <InputSelect @bind-Value="NewCar.ModelReleaseYear" class="form-control">
+        <option value="@(DateTime.Now.Year-1)">@(DateTime.Now.Year-3)</option>
+        <option value="@(DateTime.Now.Year-1)">@(DateTime.Now.Year-2)</option>
         <option value="@(DateTime.Now.Year-1)">@(DateTime.Now.Year-1)</option>
         <option value="@(DateTime.Now.Year)">@(DateTime.Now.Year)</option>
         <option value="@(DateTime.Now.Year+1)">@(DateTime.Now.Year+1)</option>
         <option value="@(DateTime.Now.Year+2)">@(DateTime.Now.Year+2)</option>
+        <option value="@(DateTime.Now.Year-1)">@(DateTime.Now.Year+3)</option>
       </InputSelect>
       <ValidationMessage For="@(()=> NewCar.ModelReleaseYear)" />
     </div>
@@ -76,19 +78,27 @@
 
 
 @code {
+    [Inject]
+    private ICarRequestService _service { get; set; }
 
   private Car NewCar = new Car();
+
+
+  private async Task GetImageFromForm(InputFileChangeEventArgs file) {
+    if(file != null) {
+      string[] ContentTypes = { "image/jpeg", "image/jpg" };
+      if(ContentTypes.Contains(file.File.ContentType)) {
+        var image = file.File.OpenReadStream();
+        var ms = new MemoryStream();
+        await image.CopyToAsync(ms);
+        NewCar.Image = ms.ToArray();
+      } else { Console.WriteLine("funfo"); }
+    }
+  }
 
   private async Task GoRegister() {
     await _service.InsertAsync(NewCar);
   }
 
-  private async Task GetImageFromForm(InputFileChangeEventArgs file) {
-    if(file != null) {
-      var image = file.File.OpenReadStream();
-      var ms = new MemoryStream();
-      await image.CopyToAsync(ms);
-      NewCar.Image = ms.ToArray();
-    }
-  }
 }
+

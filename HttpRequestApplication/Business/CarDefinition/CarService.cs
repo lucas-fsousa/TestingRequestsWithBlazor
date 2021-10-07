@@ -1,17 +1,11 @@
-﻿using System;
+﻿using App.Entities;
+using Server.Infrastructure.Contract;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
-using System.Net.Http;
-using System.Threading;
 using System.Threading.Tasks;
-using App.Entities;
-using App.WebApi.Models;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Server.Infrastructure.Contract;
 
 namespace App.WebApi.Business.CarDefinition {
   public class CarService<TEntity>: ICarService<Car> {
