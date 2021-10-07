@@ -1,6 +1,5 @@
 ﻿@page "/home/car/register"
 @inject ICarRequestService _service
-@using Microsoft.AspNetCore.Http
 
 <EditForm Model="NewCar" OnValidSubmit="@GoRegister">
   <DataAnnotationsValidator />
@@ -18,6 +17,7 @@
     <label>Color </label>
     <div class="col-sm-4">
       <InputSelect @bind-Value="NewCar.Color" class="form-control">
+        <option value="" selected></option>
         <option value="Black">Black</option>
         <option value="White">White</option>
         <option value="Red">Red</option>
@@ -67,26 +67,28 @@
   <div class="form-group row">
     <label>Images </label>
     <div class="col-sm-4">
-      <InputFile type="file" @bind-Value="NewCar.Images" class="form-control"/>
-      <ValidationMessage For="@(()=> FormFile)" />
+      <InputFile OnChange="GetImageFromForm" class="form-control" />
     </div>
   </div>
-
 
   <button class="btn btn-success" type="submit">Go Register</button>
 </EditForm>
 
-<h3>aleatorio</h3>
 
 @code {
 
   private Car NewCar = new Car();
 
-  private IFormFile FormFile { get; set; }
-
-
-
   private async Task GoRegister() {
     await _service.InsertAsync(NewCar);
+  }
+
+  private async Task GetImageFromForm(InputFileChangeEventArgs file) {
+    if(file != null) {
+      var image = file.File.OpenReadStream();
+      var ms = new MemoryStream();
+      await image.CopyToAsync(ms);
+      NewCar.Image = ms.ToArray();
+    }
   }
 }

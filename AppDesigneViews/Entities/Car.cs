@@ -27,10 +27,8 @@ namespace AppDesigneViews.Entities {
 
     [Required]
     public string Manufacturer { get; set; }
-
-    public int PhotoId { get; set; }
     
-    public IFormFile Images { get; set; }
+    public byte[] Image { get; set; }
     public List<Photo> Photos { get; set; }
   }
 }

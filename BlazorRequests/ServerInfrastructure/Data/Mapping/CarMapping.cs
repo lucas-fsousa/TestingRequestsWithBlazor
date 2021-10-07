@@ -19,7 +19,7 @@ namespace Server.Infrastructure.Data.Mapping {
       builder.Property(x => x.Manufacturer).HasMaxLength(60).IsRequired();
       builder.HasMany(x => x.Photos).WithOne();
 
-      builder.Ignore(x => x.Images);
+      builder.Ignore(x => x.Image);
     }
   }
 }

@@ -66,13 +66,22 @@ namespace App.WebApi.Controllers {
     /// <summary>
     /// Add a new user
     /// </summary>
-    /// <param name="car"></param>
+    /// <param name="newCar"></param>
     /// <returns></returns>
     [SwaggerResponse(statusCode: 200, description: "Request completed successfully.", Type = typeof(List<Car>))]
     [SwaggerResponse(statusCode: 500, description: "The request was not completed due to an internal error on the server side.")]
     [HttpPost, Route("insert")]
-    public async Task<IActionResult> Insert([FromBody]Car car) {
+    public async Task<IActionResult> Insert([FromBody]CarInputModel newCar) {
       try {
+        var car = new Car() {
+          Name = newCar.Name,
+          Color = newCar.Color,
+          Image = newCar.Image,
+          MaxKm = newCar.MaxKm,
+          Model = newCar.Model,
+          Manufacturer = newCar.Manufacturer,
+          ModelReleaseYear = newCar.ModelReleaseYear
+        };
         var result = await _definition.AddAsync(car);
         return StatusCode(201, HttpCodeMessage.Code201);
       } catch(Exception ex) {

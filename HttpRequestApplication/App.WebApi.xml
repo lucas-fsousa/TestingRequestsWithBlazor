@@ -18,11 +18,11 @@
             <param name="currentPage"></param>
             <returns></returns>
         </member>
-        <member name="M:App.WebApi.Controllers.CarController.Insert(App.Entities.Car)">
+        <member name="M:App.WebApi.Controllers.CarController.Insert(App.WebApi.Models.CarInputModel)">
             <summary>
             Add a new user
             </summary>
-            <param name="car"></param>
+            <param name="newCar"></param>
             <returns></returns>
         </member>
         <member name="M:App.WebApi.Controllers.CarController.Update(App.Entities.Car)">
