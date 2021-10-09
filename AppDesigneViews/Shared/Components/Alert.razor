@@ -1,18 +1,22 @@
 ﻿
 @if(!Closed) {
-<div>
-  <div class="alert alert-@TypeAlert alert-dismissible fade show" role="alert">
-    <p>@Message</p>
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close" @onclick="Change">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <br />
   <div>
-    <button class="btn btn-danger" @onclick="(() => AfterResponse(false))">Cancel</button>
-    <button class="btn btn-success" @onclick="(()=> AfterResponse(true))">Confirm</button>
+    <div class="alert alert-@TypeAlert alert-dismissible fade show" role="alert">
+      <p>@Message</p>
+      @if(!TypeAlert.Equals("danger") && !TypeAlert.Equals("warning")) {
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close" @onclick="Change">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      }
+    </div>
+    <br />
+    <div>
+      @if(TypeAlert.Equals("danger") || TypeAlert.Equals("warning")) {
+        <button class="btn btn-danger" @onclick="(() => AfterResponse(false))">Cancel</button>
+        <button class="btn btn-success" @onclick="(()=> AfterResponse(true))">Confirm</button>
+      }
+    </div>
   </div>
-</div>
 }
 
 

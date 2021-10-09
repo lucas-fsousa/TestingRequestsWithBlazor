@@ -3,11 +3,10 @@
 
 @if(ListCar != null) {
   @foreach(var car in ListCar) {
-    <GenericCarRender Delete="Delete" Car="car"/>
+    <GenericCarRender Delete="Delete" Update="Update" Car="car"/>
   }
 
 }
-
 
 <span> Current &lt;&lt; @CurrentPage &gt;&gt;&nbsp;</span>
 <button @onclick="GetCarsForPreviousPage" class="btn btn-secondary">Previous</button>
@@ -39,9 +38,12 @@
     }
   }
 
-  private async Task Delete(Car car) {
-    await _request.DeleteByIdAsync(car.Id);
-    //_navigation.NavigateTo("");
+  private void Delete(Car car) {
+    _navigation.NavigateTo($"/home/car/delete/{car.Id}");
+  }
+
+  private void Update(Car car) {
+    _navigation.NavigateTo($"/home/car/update/{car.Id}");
   }
 
   private async Task GetCarsForPreviousPage() {

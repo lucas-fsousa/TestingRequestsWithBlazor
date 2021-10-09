@@ -1,0 +1,113 @@
+﻿@page "/home/car/update/{id:int?}"
+@inject ICarRequestService _service
+@inject NavigationManager _navigate
+
+<button type="button" @onclick="@(() => _navigate.NavigateTo("/home"))" class="btn btn-group-sm btn-secondary">Back</button>
+
+<div class="form-group">
+  <label>Search for Id: </label>
+  <input type="number" class="form-control-sm" @bind="Id" />
+  <button class="btn btn-secondary" @onclick="GetById">Search</button>
+</div>
+
+<br />
+
+@if(Car != null) {
+  <EditForm Model="Car" OnValidSubmit="@GoUpdate">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group row">
+      <label>Name </label>
+      <div class="col-sm-4">
+        <InputText @bind-Value="Car.Name" class="form-control" />
+        <ValidationMessage For="@(()=> Car.Name)" />
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label>Color </label>
+      <div class="col-sm-4">
+        <InputSelect @bind-Value="Car.Color" class="form-control">
+          <option value="" selected></option>
+          <option value="Black">Black</option>
+          <option value="White">White</option>
+          <option value="Red">Red</option>
+        </InputSelect>
+        <ValidationMessage For="@(()=> Car.Color)" />
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label>Model </label>
+      <div class="col-sm-4">
+        <InputText @bind-Value="Car.Model" class="form-control" />
+        <ValidationMessage For="@(()=> Car.Model)" />
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label>Manufacturer </label>
+      <div class="col-sm-4">
+        <InputText @bind-Value="Car.Manufacturer" class="form-control" />
+        <ValidationMessage For="@(()=> Car.Manufacturer)" />
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label>Model Release </label>
+      <div class="col-sm-4">
+        <InputSelect @bind-Value="Car.ModelReleaseYear" class="form-control">
+          <option value="@(DateTime.Now.Year-1)">@(DateTime.Now.Year-3)</option>
+          <option value="@(DateTime.Now.Year-1)">@(DateTime.Now.Year-2)</option>
+          <option value="@(DateTime.Now.Year-1)">@(DateTime.Now.Year-1)</option>
+          <option value="@(DateTime.Now.Year)">@(DateTime.Now.Year)</option>
+          <option value="@(DateTime.Now.Year+1)">@(DateTime.Now.Year+1)</option>
+          <option value="@(DateTime.Now.Year+2)">@(DateTime.Now.Year+2)</option>
+          <option value="@(DateTime.Now.Year-1)">@(DateTime.Now.Year+3)</option>
+        </InputSelect>
+        <ValidationMessage For="@(()=> Car.ModelReleaseYear)" />
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label>Max Km/h </label>
+      <div class="col-sm-4">
+        <InputNumber @bind-Value="Car.MaxKm" class="form-control" />
+        <ValidationMessage For="@(()=> Car.MaxKm)" />
+      </div>
+    </div>
+
+    <button class="btn btn-success" type="submit">Go Update</button>
+  </EditForm>
+} else if(Car == null) {
+  <Alert TypeAlert="info" Message="No results!" />
+}
+
+
+@code {
+
+  [Parameter]
+  public int Id { get; set; }
+
+  private Car Car = new Car();
+
+  public async Task GetById() {
+    Car = await _service.GetCarByIdAsync(Id);
+  }
+
+  protected override async Task OnInitializedAsync() {
+    await GetById();
+  }
+
+  //protected override async Task OnParametersSetAsync() {
+  //  await GetById();
+  //  Console.WriteLine("setou");
+  //}
+
+  public async Task GoUpdate() {
+    await _service.UpdateAsync(Car);
+    _navigate.NavigateTo("/home");
+  }
+
+}

@@ -1,0 +1,33 @@
+﻿@page "/home/car/delete/{id:int}"
+@inject ICarRequestService _service
+@inject NavigationManager _navigate
+<Alert Message="Really? REALLY? Oh no..." TypeAlert="danger" Response="GetResponse" />
+
+@if(Response) {
+  if(Id > 0) {
+    GoDelete();
+  }
+} else {
+  if(!FirstRender)
+  _navigate.NavigateTo("/home");
+}
+
+@code {
+
+  [Parameter]
+  public int Id { get; set; }
+
+  private bool FirstRender { get; set; } = true;
+  private bool Response { get; set; }
+
+  private async Task GetResponse(bool response) {
+    Response = await Task.FromResult(response);
+    FirstRender = false;
+  }
+
+  private async Task GoDelete() {
+    await _service.DeleteByIdAsync(Id);
+    _navigate.NavigateTo("/home");
+  }
+
+}

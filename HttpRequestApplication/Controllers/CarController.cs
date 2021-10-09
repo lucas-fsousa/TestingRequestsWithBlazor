@@ -100,10 +100,6 @@ namespace App.WebApi.Controllers {
     [HttpPut, Route("update")]
     public async Task<IActionResult> Update([FromBody]Car car) {
       try {
-        var exist = _definition.GetAsyncByKey(car.Id);
-        if(exist.Result == null) {
-          return StatusCode(400, HttpCodeMessage.Code400);
-        }
         await _definition.Update(car);
         return StatusCode(200, HttpCodeMessage.Code200);
       } catch(Exception ex) {
