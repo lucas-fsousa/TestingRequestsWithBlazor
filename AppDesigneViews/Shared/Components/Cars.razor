@@ -3,14 +3,19 @@
 
 @if(ListCar != null) {
   @foreach(var car in ListCar) {
-    <GenericCarRender Delete="Delete" Update="Update" Car="car"/>
+    <GenericCarRender Delete="Delete" Update="Update" Car="car" />
   }
 
 }
 
-<span> Current &lt;&lt; @CurrentPage &gt;&gt;&nbsp;</span>
-<button @onclick="GetCarsForPreviousPage" class="btn btn-secondary">Previous</button>
-<button @onclick="GetCarsForNextPage" class="btn btn-info">Next</button>
+@if(ListCar != null) {
+  <span> Current [ @CurrentPage ] &nbsp;</span>
+  <button @onclick="GetCarsForPreviousPage" class="btn btn-secondary">Previous</button>
+  <button @onclick="GetCarsForNextPage" class="btn btn-info">Next</button>
+} else {
+  <Alert Message="There are no results to display. Enter a new item in the Records tab."/>
+}
+
 
 
 @code {

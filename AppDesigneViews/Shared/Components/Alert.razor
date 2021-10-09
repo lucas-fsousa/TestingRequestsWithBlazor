@@ -2,7 +2,7 @@
 @if(!Closed) {
   <div>
     <div class="alert alert-@TypeAlert alert-dismissible fade show" role="alert">
-      <p>@Message</p>
+      <p class="text-center">@Message</p>
       @if(!TypeAlert.Equals("danger") && !TypeAlert.Equals("warning")) {
         <button type="button" class="close" data-dismiss="alert" aria-label="Close" @onclick="Change">
           <span aria-hidden="true">&times;</span>
